@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public float moveSpeed;
 
-    public InputActionReference moveInput;
+    public InputActionReference moveInput, actionInput;
 
     public Animator animator;
 
@@ -33,6 +33,22 @@ public class PlayerController : MonoBehaviour
             transform.localScale = Vector3.one;
         }
 
+        if(actionInput.action.WasPressedThisFrame())
+        {
+            useTool();
+        }
+
+
         animator.SetFloat("speed", rb.linearVelocity.magnitude);
     }
+
+    void useTool()
+    {
+        GrowBlock block = null;
+
+        block = FindFirstObjectByType<GrowBlock>();
+
+        block.PloughSoil();
+    }
+
 }
