@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     public ToolType currentTool;
 
+    public float toolWaitTime = .5f;
+    private float toolWaitCounter;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,15 +32,24 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //moving logic
-        rb.linearVelocity = moveInput.action.ReadValue<Vector2>().normalized * moveSpeed;
-        if(rb.linearVelocity.x < 0f)
+        if (toolWaitCounter > 0)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f); 
+            toolWaitCounter -= Time.deltaTime;
+            rb.linearVelocity = Vector2.zero;
         }
-        else if(rb.linearVelocity.x > 0f)
+        else
         {
-            transform.localScale = Vector3.one;
+            //moving logic
+            rb.linearVelocity = moveInput.action.ReadValue<Vector2>().normalized * moveSpeed;
+            if (rb.linearVelocity.x < 0f)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+            else if (rb.linearVelocity.x > 0f)
+            {
+                transform.localScale = Vector3.one;
+            }
+
         }
 
         ///tools
@@ -99,6 +110,8 @@ public class PlayerController : MonoBehaviour
 
         //block.PloughSoil();
 
+        toolWaitCounter = toolWaitTime;
+
         if (block != null)
         {
             switch (currentTool)
@@ -107,17 +120,24 @@ public class PlayerController : MonoBehaviour
 
                     block.PloughSoil();
 
+                    animator.SetTrigger("usePlough");
+
                     break;
                 case ToolType.wateringCan:
 
+                    block.WaterSoil();
+
+                    animator.SetTrigger("useWateringCan");
 
                     break;
                 case ToolType.seeds:
 
+                    block.PlantCrop();
 
                     break;
                 case ToolType.basket:
 
+                    block.HarvestCrop();
 
                     break;
             }

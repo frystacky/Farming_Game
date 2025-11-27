@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Crops
+    uniqueID: 3529800665
+    locked: 0
   - name: Player
     uniqueID: 1459067355
     locked: 0
