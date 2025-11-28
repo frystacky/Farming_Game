@@ -24,6 +24,8 @@ public class GrowBlock : MonoBehaviour
 
     public bool isWatered = false;
 
+    public bool preventUse;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -80,7 +82,7 @@ public class GrowBlock : MonoBehaviour
 
     public void PloughSoil()
     {
-        if(currentStage == GrowthStage.barren)
+        if(currentStage == GrowthStage.barren && preventUse == false)
         {
             currentStage = GrowthStage.ploughed;
             SetSoilSprite();
@@ -89,14 +91,17 @@ public class GrowBlock : MonoBehaviour
 
     public void WaterSoil()
     {
-        isWatered = true;
+        if(preventUse == false)
+        {
+            isWatered = true;
 
-        SetSoilSprite();
+            SetSoilSprite();
+        }
     }
 
     public void PlantCrop()
     {
-        if(currentStage == GrowthStage.ploughed && isWatered == true)
+        if(currentStage == GrowthStage.ploughed && isWatered == true && preventUse == false)
         {
             currentStage = GrowthStage.planted;
             UpdateCropSprite();
@@ -135,7 +140,7 @@ public class GrowBlock : MonoBehaviour
 
     public void AdvanceCrop()
     {
-        if(isWatered == true)
+        if(isWatered == true && preventUse == false)
         {
             if(currentStage == GrowthStage.planted || currentStage == GrowthStage.growing1 || currentStage == GrowthStage.growing2)
             {
@@ -150,7 +155,7 @@ public class GrowBlock : MonoBehaviour
 
     public void HarvestCrop()
     {
-        if(currentStage == GrowthStage.ripe)
+        if(currentStage == GrowthStage.ripe && preventUse == false)
         {
             currentStage = GrowthStage.ploughed;
 
