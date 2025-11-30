@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GridController : MonoBehaviour
 {
+    public static GridController instance;
+
     public Transform minPoint, maxPoint;
     public GrowBlock baseGridBlock;
 
@@ -11,6 +13,11 @@ public class GridController : MonoBehaviour
     public List<BlockRow> blockRows = new List<BlockRow>();
 
     public LayerMask gridBlockers;
+
+    public void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -45,6 +52,7 @@ public class GridController : MonoBehaviour
                 GrowBlock newblock = Instantiate(baseGridBlock, startpoint + new Vector3(x, y, 0f), Quaternion.identity);
 
                 newblock.transform.SetParent(transform);
+                newblock.sr.sprite = null; //nulls the test image block
 
                 blockRows[y].blocks.Add(newblock);
 
@@ -61,6 +69,26 @@ public class GridController : MonoBehaviour
         baseGridBlock.gameObject.SetActive(false);
 
     }
+
+    public GrowBlock GetBlock(float x, float y)
+    {
+        x = Mathf.RoundToInt(x);
+        y = Mathf.RoundToInt(y);
+
+        x -= minPoint.position.x;
+        y -= minPoint.position.y;
+
+        int IntX = Mathf.RoundToInt(x);
+        int IntY = Mathf.RoundToInt(y);
+
+        if(IntX < gridSize.x && IntY < gridSize.y)
+        {
+            return blockRows[IntY].blocks[IntX];
+        }
+
+        return null;
+    }
+
 
 }
 
