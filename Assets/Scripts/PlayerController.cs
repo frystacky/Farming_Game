@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
+
     public Rigidbody2D rb;
     public float moveSpeed;
 
@@ -26,6 +29,20 @@ public class PlayerController : MonoBehaviour
 
     public Transform toolIndicator;
     public float toolRange = 3f;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
