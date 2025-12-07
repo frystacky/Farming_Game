@@ -65,9 +65,9 @@ public class GridController : MonoBehaviour
                 }
 
                 //pull out info from Gridinfo if it was made
-                if(GridInfo.Instance.hasGrid == true)
+                if(GridInfo.instance.hasGrid == true)
                 {
-                    BlockInfo storedBlock = GridInfo.Instance.theGrid[y].blocks[x];
+                    BlockInfo storedBlock = GridInfo.instance.theGrid[y].blocks[x];
 
                     newblock.currentStage = storedBlock.currentStage;
                     newblock.isWatered = storedBlock.isWatered;
@@ -80,9 +80,9 @@ public class GridController : MonoBehaviour
            
         }
 
-        if(GridInfo.Instance.hasGrid == false)
+        if(GridInfo.instance.hasGrid == false)
         {
-            GridInfo.Instance.CreateGrid();
+            GridInfo.instance.CreateGrid();
         }
 
         baseGridBlock.gameObject.SetActive(false);

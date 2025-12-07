@@ -178,7 +178,7 @@ public class GrowBlock : MonoBehaviour
 
     void UpdateGridInfo()
     {
-        GridInfo.Instance.UpdateInfo(this, gridPostion.x, gridPostion.y);
+        GridInfo.instance.UpdateInfo(this, gridPostion.x, gridPostion.y);
     }
 
 }
