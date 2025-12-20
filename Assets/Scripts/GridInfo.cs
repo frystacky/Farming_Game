@@ -44,6 +44,8 @@ public class GridInfo : MonoBehaviour
     {
         theGrid[yPos].blocks[xPos].currentStage = theBlock.currentStage;
         theGrid[yPos].blocks[xPos].isWatered = theBlock.isWatered;
+        theGrid[yPos].blocks[xPos].cropType = theBlock.cropType;
+        theGrid[yPos].blocks[xPos].growChanceFail = theBlock.growChanceFail;
     }
 
     public void GrowCrop()
@@ -52,31 +54,44 @@ public class GridInfo : MonoBehaviour
         {
             for(int x = 0; x < theGrid[y].blocks.Count; x++)
             {
-                if (theGrid[y].blocks[x].isWatered == true)
+                float growFailTest = Random.Range(0f, 100f);
+
+                if (growFailTest > theGrid[y].blocks[x].growChanceFail)
                 {
-                    switch (theGrid[y].blocks[x].currentStage)
+
+
+                    if (theGrid[y].blocks[x].isWatered == true)
                     {
-                        case GrowBlock.GrowthStage.planted:
+                        switch (theGrid[y].blocks[x].currentStage)
+                        {
+                            case GrowBlock.GrowthStage.planted:
 
-                            theGrid[y].blocks[x].currentStage = GrowBlock.GrowthStage.growing1;
+                                theGrid[y].blocks[x].currentStage = GrowBlock.GrowthStage.growing1;
 
-                        break;
+                                break;
 
-                        case GrowBlock.GrowthStage.growing1:
+                            case GrowBlock.GrowthStage.growing1:
 
-                            theGrid[y].blocks[x].currentStage = GrowBlock.GrowthStage.growing2;
+                                theGrid[y].blocks[x].currentStage = GrowBlock.GrowthStage.growing2;
 
-                        break;
+                                break;
 
-                        case GrowBlock.GrowthStage.growing2:
+                            case GrowBlock.GrowthStage.growing2:
 
-                        theGrid[y].blocks[x].currentStage = GrowBlock.GrowthStage.ripe;
+                                theGrid[y].blocks[x].currentStage = GrowBlock.GrowthStage.ripe;
 
-                        break;
+                                break;
+                        }
+
+                        theGrid[y].blocks[x].isWatered = false;
                     }
 
-                    theGrid[y].blocks[x].isWatered = false;
                 }
+                if (theGrid[y].blocks[x].currentStage == GrowBlock.GrowthStage.ploughed)
+                {
+                    theGrid[y].blocks[x].currentStage = GrowBlock.GrowthStage.barren;
+                }
+
             }
         }
 
@@ -100,6 +115,8 @@ public class BlockInfo
     public bool isWatered;
     public GrowBlock.GrowthStage currentStage;
 
+    public CropController.CropType cropType;
+    public float growChanceFail;
 }
 
 [System.Serializable]
