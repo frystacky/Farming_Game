@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class UIController : MonoBehaviour
     public GameObject[] toolBarActivatorIcons;
 
     public TMP_Text timeText;
+
+    public InventoryController theIC;
+
+    public Image seedImage;
 
     private void Awake()
     {
@@ -33,7 +39,10 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Keyboard.current.iKey.wasPressedThisFrame)
+        {
+            theIC.OpenClose();
+        }
     }
 
     public void SwitchTool(int selected)
@@ -71,5 +80,9 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void SwitchSeed(CropController.CropType crop)
+    {
+        seedImage.sprite = CropController.instance.GetCropInfo(crop).seedType;
+    }
 
 }
