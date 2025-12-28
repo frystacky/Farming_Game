@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         UIController.instance.SwitchTool((int)currentTool);
+
+        UIController.instance.SwitchSeed(seedCropType);
     }
 
     // Update is called once per frame
@@ -58,12 +60,25 @@ public class PlayerController : MonoBehaviour
 
         if (UIController.instance != null)
         {
-            if(UIController.instance.theIC.gameObject.activeSelf == true)
+            if (UIController.instance.theIC != null)
             {
-                rb.linearVelocity = Vector2.zero;
-                return;
+                if (UIController.instance.theIC.gameObject.activeSelf == true)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    return;
+                }
+            }
+
+            if(UIController.instance.theShop != null)
+            {
+                if (UIController.instance.theShop.gameObject.activeSelf == true)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    return;
+                }
             }
         }
+
 
         if (toolWaitCounter > 0)
         {
