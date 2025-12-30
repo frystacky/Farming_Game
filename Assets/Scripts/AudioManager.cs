@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour
         if (isPaused == false)
         {
             //index >= 0 && index < players.Length
-            if (bgMusic[currentTrack].isPlaying == false)
+            if (currentTrack >= 0 && currentTrack < bgMusic.Length && bgMusic[currentTrack].isPlaying == false)
             {
                 PlayNextBGM();
             }
