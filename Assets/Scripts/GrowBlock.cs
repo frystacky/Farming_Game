@@ -26,6 +26,8 @@ public class GrowBlock : MonoBehaviour
 
     public bool preventUse;
 
+    public bool canFishHere = false;
+
     private Vector2Int gridPostion;
 
     public CropController.CropType cropType;

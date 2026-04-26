@@ -13,6 +13,7 @@ public class GridController : MonoBehaviour
     public List<BlockRow> blockRows = new List<BlockRow>();
 
     public LayerMask gridBlockers;
+    public LayerMask fishableBlock;
 
     public void Awake()
     {
@@ -64,8 +65,16 @@ public class GridController : MonoBehaviour
                     newblock.preventUse = true;
                 }
 
+                if (Physics2D.OverlapBox(newblock.transform.position, new Vector2(.9f, .9f), 0, fishableBlock))
+                {
+                    newblock.sr.sprite = null;
+                    newblock.preventUse = true;
+                    newblock.canFishHere = true;
+                    Debug.Log("Found fishable"); //TODO REMOVE
+                }
+
                 //pull out info from Gridinfo if it was made
-                if(GridInfo.instance.hasGrid == true)
+                if (GridInfo.instance.hasGrid == true)
                 {
                     BlockInfo storedBlock = GridInfo.instance.theGrid[y].blocks[x];
 

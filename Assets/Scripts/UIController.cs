@@ -24,6 +24,8 @@ public class UIController : MonoBehaviour
     public GameObject pauseScreen;
     public string MainMenuScene;
 
+    public int IventoryBeltSize;
+
     private void Awake()
     {
         if (instance == null) 
@@ -35,13 +37,15 @@ public class UIController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
+        IventoryBeltSize = toolBarActivatorIcons.Length;
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame

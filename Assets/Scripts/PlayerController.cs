@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
         plought,
         wateringCan,
         seeds,
-        basket
+        basket,
+        fishingrod
     }
 
     public ToolType currentTool;
@@ -115,14 +116,17 @@ public class PlayerController : MonoBehaviour
         {
             currentTool++;
 
-            if((int)currentTool >= 4)
+            if((int)currentTool >= UIController.instance.IventoryBeltSize)
             {
                 currentTool = ToolType.plought;
+
+                Debug.Log("We tabbed"); //TODO REMOVE
             }
 
             hasSwitchTool = true;
         }
 
+        //Inventory toolbar switch logic TODO make it felxable
         if(Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             currentTool = ToolType.plought;
@@ -141,6 +145,11 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             currentTool = ToolType.basket;
+            hasSwitchTool = true;
+        }
+        if (Keyboard.current.digit5Key.wasPressedThisFrame)
+        {
+            currentTool = ToolType.fishingrod;
             hasSwitchTool = true;
         }
 
@@ -224,6 +233,20 @@ public class PlayerController : MonoBehaviour
                 case ToolType.basket:
 
                     block.HarvestCrop();
+
+                    break;
+                case ToolType.fishingrod:
+
+                    if(block.canFishHere)
+                    {
+                        Debug.Log("We FISHING?"); //TOOD REMOVE
+
+                        //TODO:
+                        // cast fishing rod animation
+                        // have some fishing mini game
+                        // catch fish anitmation
+                        // add fish to inventory
+                    }
 
                     break;
             }
