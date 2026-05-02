@@ -241,6 +241,12 @@ public class PlayerController : MonoBehaviour
                     {
                         Debug.Log("We FISHING?"); //TOOD REMOVE
 
+                        //function to fish
+                            //stop moving and add a cancel/fish in options
+                            //move animator set trigger in functions
+
+                        animator.SetTrigger("useFishingRod");
+
                         //TODO:
                         // cast fishing rod animation
                         // have some fishing mini game
@@ -259,4 +265,5 @@ public class PlayerController : MonoBehaviour
     {
         seedCropType = newSeed;
     }
+
 }
